@@ -1,48 +1,3 @@
-'''# connect to google 
-from pytrends.request import TrendReq
-pytrends = TrendReq(hl='en-US', tz=600) 
-
-# build payload
-kw_list = ["kid named finger","better call saul","breaking bad","markiplier"] # list of keywords to get data 
-pytrends.build_payload(kw_list)
-
-#1 Interest over Time
-data = pytrends.interest_over_time()
-data = data.reset_index()
-
-import plotly.express as px
-
-fig = px.line(data, x="date", y=kw_list, title='Keyword Web Search Interest Over Time')
-fig.show()
-
-hist_int = pytrends.get_historical_interest(kw_list, year_start=2021, month_start=9, day_start=1, hour_start=0, year_end=2021, month_end=9, day_end=30, hour_end=0, cat=0, sleep=0)
-hist_int.head(10)
-
-by_region = pytrends.interest_by_region(resolution='COUNTRY', inc_low_vol=True, inc_geo_code=False)
-by_region.head(10) 
-
-
-import pandas as pd                        
-from pytrends.request import TrendReq
-pytrend = TrendReq()
-
-pytrend.build_payload(kw_list=['Taylor Swift'])# Interest by Region
-df = pytrend.interest_by_region()
-df.head(10)
-
-df.reset_index().plot(x='geoName', y='Taylor Swift', figsize=(120, 10), kind ='bar')
-
-from lib2to3 import pytree
-from pytrends.request import TrendReq
-import pandas as pd
-from datetime import datetime, date, time
-
-pytrend = TrendReq()
-pytrend.build_payload(kw_list=['vlog','blog'], timeframe='today 4-y' , geo ='ID')
-
-Interest_over_time df = pytrend.interest_over_time()
-print(interest_over_time_df.head())'''
-
 from pytrends.request import TrendReq
 import matplotlib.pyplot as plt
 import numpy as np
@@ -52,7 +7,7 @@ plt.style.use('ggplot')
 
 pytrends = TrendReq(hl='en-US')
 
-all_keywords = ['kid named finger', 'ben']
+all_keywords = ['kid named finger', 'market fryer']
 keywords = []
 
 timeframes = ['today 5-y', 'today 12-m',
