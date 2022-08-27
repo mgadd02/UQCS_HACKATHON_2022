@@ -181,4 +181,3 @@ model.fit(
 
 num_classes = metadata.features['label'].num_classes
 print(num_classes)
-

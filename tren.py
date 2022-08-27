@@ -7,7 +7,7 @@ plt.style.use('ggplot')
 
 pytrends = TrendReq(hl='en-US')
 
-all_keywords = ['kid named finger', 'market fryer']
+all_keywords = ['kid named finger', 'market fryer', 'fortnite battle pass']
 keywords = []
 
 timeframes = ['today 5-y', 'today 12-m',
