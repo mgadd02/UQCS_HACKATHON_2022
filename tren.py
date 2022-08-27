@@ -7,20 +7,13 @@ plt.style.use('ggplot')
 
 pytrends = TrendReq(hl='en-US')
 
-all_keywords = ['kid named finger', 'market fryer', 'fortnite battle pass']
-keywords = []
-
 timeframes = ['today 5-y', 'today 12-m',
               'today 3-m', 'today 1-m']
 cat = '0'
 geo = ''
 gprop = ''
 
-countries = ['australia', 'united_states']
-
-#Part 1 - Google trends analysis
-
-def check_trends():
+def check_trends(keywords, kw):
     pytrends.build_payload(keywords,
                            cat,
                            timeframes[0],
@@ -95,18 +88,17 @@ def check_trends():
     
     print('')
 
-for kw in all_keywords:
-    keywords.append(kw)
-    check_trends()
-    keywords.pop()
+def trends(all_keywords):
+    keywords = []
 
-#Part 5 - Trending searches
-def trending_searches(country):
-    data = pytrends.trending_searches(country)
-    print(data.head(5))
+    for kw in all_keywords:
+        keywords.append(kw)
+        check_trends(keywords, kw)
+        keywords.pop()
 
-for country in countries:
-    print(country)
-    print('')
-    trending_searches(country)
-    print('')
+def main():
+    all_keywords = ['kid named finger', 'market fryer', 'fortnite battle pass']
+    trends(all_keywords)
+
+if __name__ == "__main__":
+    main()
