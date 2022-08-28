@@ -8,6 +8,8 @@ import nltk
 import numpy
 from rake_nltk import Rake
 from keybert import KeyBERT
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+#nltk.download('vader_lexicon')
 
 #set header for internet requests
 headers = {
@@ -101,3 +103,28 @@ def broadTags(url):
 def quickTags(url):
     return headingsToTags(imageHeadings(url))
 
+#input url
+#returns string depicitng sentiment surrounding the image
+def sentiment(url):
+    imgUrls = imageFinder(url, 3)
+    allHeadings = []
+    refinedText = ""
+    for imgURL in imgUrls:
+        imgHeadings = imageHeadings(imgURL)
+        allHeadings = allHeadings + imgHeadings
+    for heading in allHeadings:
+        heading = ''.join([i for i in heading if not i.isdigit()])
+        heading = re.sub(r'[^\w]', ' ', heading)
+        heading = " ".join(heading.split())
+        refinedText = refinedText + " " + heading
+    score = SentimentIntensityAnalyzer().polarity_scores(refinedText)
+    neg  = score['neg']
+    pos = score['pos']
+    if neg > pos:
+        return "This image has mostly negative sentiment."
+    elif pos > neg:
+        return "This image has mostly positive sentiment."
+    else:
+        return "This image has mostly neutral sentiment."
+    
+    
