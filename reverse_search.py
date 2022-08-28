@@ -3,7 +3,9 @@ import requests
 import os
 import re
 import nltk
+import numpy
 from rake_nltk import Rake
+from keybert import KeyBERT
 
 headers = {
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.57'
@@ -24,7 +26,13 @@ def imageHeadings(url):
 
 def headingsToTags(headings):
     rake = Rake()
-    rake.extract_keywords_from_sentences(headings)
+    filteredHeadings = []
+    for heading in headings:
+        heading = ''.join([i for i in heading if not i.isdigit()])
+        heading = re.sub(r'[^\w]', ' ', heading)
+        heading = " ".join(heading.split())
+        filteredHeadings.append(heading)
+    rake.extract_keywords_from_sentences(filteredHeadings)
     draftKeyList = []
     for rating, keyword in rake.get_ranked_phrases_with_scores():
         if rating > 5:
@@ -34,12 +42,12 @@ def headingsToTags(headings):
         refinedText = refinedText +  " " + key
     refinedText  = re.sub(r'[^\w]', ' ', refinedText)
     refinedText = " ".join(refinedText.split())
-    rake2 = Rake()
-    rake2.extract_keywords_from_text(refinedText)
-    keyList = []
-    for rating, keyword in rake2.get_ranked_phrases_with_scores():
-        keyList.append(keyword)
-    return keyList
+    kw_model = KeyBERT()
+    results = kw_model.extract_keywords(refinedText)
+    keywords =[]
+    for word, score in results:
+        keywords.append(word)
+    return keywords
 
     
 
