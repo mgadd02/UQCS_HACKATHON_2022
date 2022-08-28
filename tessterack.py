@@ -30,26 +30,26 @@ for dir in dir_list:
 
     r.extract_keywords_from_text(words)
     count = 0
-    kws = ""
+    kws = []
     for rating, keywords in r.get_ranked_phrases_with_scores():
         #print(keyword)
         keywords = keywords.split(" ")
         for keyword in keywords:
             if keyword.isalpha():
-                kws += keyword + " "
+                kws.append(keyword)
                 count += 1
 
-            if count > 5:
+            if count > 3:
                 break
-        if count > 5:
+        if count > 3:
             break
-    topic_list.append(kws[:len(kws)-1])
+    if len(kws) != 0:
+        topic_list.append(kws)
 
     
 
 print(topic_list)
 from tren import *
-#trends(topic_list)
+trends(topic_list)
 
-all_keywords = ['joe mama']
-#trends(all_keywords)
+#trends([['joe mama']])
