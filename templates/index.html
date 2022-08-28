@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../static/main.css">
+    <h1>deez nuts</h1>
+</head>
+<body>
+    <form class = "grid" action = "/result" method = post>
+        <center>
+            {% if url %}
+            <h3 style = "color: blue;">Url: {{url}}</h3>
+            {% endif %}
+        </center>
+        <label for = "Image">Enter image url: </label>
+        <input type="text" name="url" id="url">
+
+        <centre><input type = "Submit" class = "file_submit"></centre>
+    </form>
+</body>
+</html>
