@@ -1,3 +1,5 @@
+
+#imports
 from bs4 import BeautifulSoup
 import requests
 import os
@@ -7,10 +9,14 @@ import numpy
 from rake_nltk import Rake
 from keybert import KeyBERT
 
+#set header for internet requests
 headers = {
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.57'
 }
 
+#returns image headings as strings from a reverse google image search
+#takes url as string
+#returns list of headings strings
 def imageHeadings(url):
     googlepath = "https://images.google.com/searchbyimage?image_url=" + url
     req = requests.get(googlepath, headers=headers)
@@ -24,6 +30,9 @@ def imageHeadings(url):
         
     return results
 
+#creates tags from a list of strings
+#takes lists of strings (typically headings of google results)
+#returns possible tags for these strings
 def headingsToTags(headings):
     rake = Rake()
     filteredHeadings = []
@@ -50,7 +59,9 @@ def headingsToTags(headings):
     return keywords
 
     
-
+#finds specified number of similar images and returns their URLS
+#takes URL as string
+#returns list of URLS as strings
 def imageFinder(url, numImages):
     googlepath = 'https://images.google.com/searchbyimage?image_url=' + url
     req = requests.get(googlepath, headers=headers)
@@ -72,12 +83,21 @@ def imageFinder(url, numImages):
             num += 1
     return links
 
-#def sentiment():
-#    print ("")
+#Scalps possible tags from google using related images also
+#returns list of tags
+#takes string url input
+def broadTags(url):
+    imgUrls = imageFinder(url, 3)
+    allHeadings = []
+    for imgURL in imgUrls:
+        imgHeadings = imageHeadings(imgURL)
+        allHeadings = allHeadings + imgHeadings
+    return headingsToTags(allHeadings)
 
-defaultURL = "https://cdn.discordapp.com/attachments/339681674944315392/1012522250051788871/unknown.png"
-usrIn = input("URL: ")
-if usrIn == "":
-    usrIn = defaultURL
 
-print(headingsToTags(imageHeadings(usrIn)))
+#Scalps possible tags from google
+#returns list of tags
+#takes string url input
+def quickTags(url):
+    return headingsToTags(imageHeadings(url))
+
