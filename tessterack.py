@@ -10,8 +10,10 @@ dir_list = os.listdir(path)
 from rake_nltk import Rake
 r = Rake()
 import re
+import enchant
+d = enchant.Dict("en-US")
 
-kws_list = []
+topic_list = []
 for dir in dir_list:
     if dir == "Temp disabled":
         break
@@ -19,24 +21,35 @@ for dir in dir_list:
     img = Image.open(path + "/" + dir)
     text = tess.image_to_string(img)
 
-    print("--------------------------------------------\n" + dir + ":")
+    #print("--------------------------------------------\n" + dir + ":")
 
     res = re.findall(r'\w+', text.lower())
     words = " ".join(res)
-    print(words)
+    #print(words)
     #kws_list.append(words)
 
     r.extract_keywords_from_text(words)
+    count = 0
     kws = ""
-    for rating, keyword in r.get_ranked_phrases_with_scores():
-        if rating > 5:
-            kws = "{} {}".format(kws, keyword)
-    print(kws)
-    kws_list.append(kws[:5])
+    for rating, keywords in r.get_ranked_phrases_with_scores():
+        #print(keyword)
+        keywords = keywords.split(" ")
+        for keyword in keywords:
+            if keyword.isalpha():
+                kws += keyword + " "
+                count += 1
 
-print(kws_list)
+            if count > 5:
+                break
+        if count > 5:
+            break
+    topic_list.append(kws[:len(kws)-1])
+
+    
+
+print(topic_list)
 from tren import *
-#trends(kws_list)
+#trends(topic_list)
 
-#all_keywords = ['kid named finger', 'market fryer', 'fortnite battle pass']
+all_keywords = ['joe mama']
 #trends(all_keywords)
