@@ -36,73 +36,81 @@ def check_trends(topic):
         trend2 += round(((avg/avg2)-1)*100,2)
 
     amount = len(topic)
-    mean /= amount
-    avg /= amount
-    avg2 /= amount
-    trend /= amount
-    trend2 /= amount
+    mean = round(mean/amount, 2)
+    avg = round(avg/amount, 2)
+    avg2 = round(avg2/amount, 2)
+    trend = round(trend/amount, 2)
+    trend2 = round(trend2/amount, 2)
     
-    print('The average 5 years interest of ' + str(topic) + ' was ' + str(mean) + '.')
-    print('The last year interest of ' + str(topic) + ' compared to the last 5 years'
-          + ' has changed by ' + str(trend)+ '%.')
+    #result += 'The average 5 years interest of ' + "this image" + ' was ' + str(mean) + '.\n'
+    result1 = ('The last year interest of ' + "this image" + ' compared to the last 5 years'
+          + ' has changed by ' + str(trend)+ '%.\n')
     #Stable trend
+    result2 = ""
     if mean > 75 and abs(trend) <= 5:
-        print('The interest for ' + str(topic) + ' is stable in the last 5 years.')
+        result2 += 'The interest for ' + "this image" + ' is stable in the last 5 years.'
     elif mean > 75 and trend > 5:
-        print('The interest for ' + str(topic) + ' is stable and increasing in the last 5 years.')
+        result2 += 'The interest for ' + "this image" + ' is stable and increasing in the last 5 years.'
     elif mean > 75 and trend < -5:
-        print('The interest for ' + str(topic) + ' is stable and decreasing in the last 5 years.')
+        result2 += 'The interest for ' + "this image" + ' is stable and decreasing in the last 5 years.'
 
     #Relatively stable
     elif mean > 60 and abs(trend) <= 15:
-        print('The interest for ' + str(topic) + ' is relatively stable in the last 5 years.')
+        result2 += 'The interest for ' + "this image" + ' is relatively stable in the last 5 years.'
     elif mean > 60 and trend > 15:
-        print('The interest for ' + str(topic) + ' is relatively stable and increasing in the last 5 years.')
+        result2 += 'The interest for ' + "this image" + ' is relatively stable and increasing in the last 5 years.'
     elif mean > 60 and trend < -15:
-        print('The interest for ' + str(topic) + ' is relatively stable and decreasing in the last 5 years.')
+        result2 += 'The interest for ' + "this image" + ' is relatively stable and decreasing in the last 5 years.'
 
     #Seasonal
     elif mean > 20 and abs(trend) <= 15:
-        print('The interest for ' + str(topic) + ' is seasonal.')
+        result2 += 'The interest for ' + "this image" + ' is seasonal.'
 
     #New keyword
     elif mean > 20 and trend > 15:
-        print('The interest for ' + str(topic) + ' is trending.')
+        result2 += 'The interest for ' + "this image" + ' is trending.'
 
     #Declining keyword
     elif mean > 20 and trend < -15:
-        print('The interest for ' + str(topic) + ' is significantly decreasing.')
+        result2 += 'The interest for ' + "this image" + ' is significantly decreasing.'
 
     #Cyclinal
     elif mean > 5 and abs(trend) <= 15:
-        print('The interest for ' + str(topic) + ' is cyclical.')
+        result2 += 'The interest for ' + "this image" + ' is cyclical.'
 
     #New
     elif mean > 0 and trend > 15:
-        print('The interest for ' + str(topic) + ' is new and trending.')
+        result2 += 'The interest for ' + "this image" + ' is new and trending.'
 
     #Declining
     elif mean > 0 and trend < -15:
-        print('The interest for ' + str(topic) + ' is declining and not comparable to its peak.')
+        result2 += 'The interest for ' + "this image" + ' is declining and not comparable to its peak.'
 
     #Other
     else:
-        print('This is something to be checked.')
+        result2 += 'This is something to be checked.'
+
+    result2 += "\n"
 
     #Comparison last year vs. 5 years ago
+    result3 = ""
     if avg2 == 0:
-        print('This didn\'t exist 5 years ago.')
+        result3 += 'This didn\'t exist 5 years ago.'
     elif trend2 > 15:
-        print('The last year interest is quite higher compared to 5 years ago.'
+        result3 += ('The last year interest is quite higher compared to 5 years ago.'
               + ' It has increased by ' + str(trend2)+'%.')
     elif trend2 < -15:
-        print('The last year interest is quite lower compared to 5 years ago.'
+        result3 += ('The last year interest is quite lower compared to 5 years ago.'
               + ' It has decreased by ' + str(trend2)+'%.')
     else:
-        print('The last year interest is comparable to 5 years ago. '
+        result3 += ('The last year interest is comparable to 5 years ago. '
               + ' It has changed by ' + str(trend2)+'%.')
     
-    print('')
+    result3 += ('\n')
+
+    #print(result)
+
+    return [result1, result2, result3]
 
 def trends(all_topics):
     for topic in all_topics:

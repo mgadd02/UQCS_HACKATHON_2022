@@ -88,16 +88,16 @@ option{
 }
 
 .file_submit{
-  margin-top: 1vmax;
-  border: 1px solid #55acee;
-  outline: none;
-  background-color: #55acee;
-  color: white;
-  padding: 1vmax;
-  cursor: pointer;
-  transition: 0.3s;
-  letter-spacing: 3px;
-}
+    margin-top: 1vmax;
+    border: 1px solid #55acee;
+    outline: none;
+    background-color: #55acee;
+    color: white;
+    padding: 1vmax;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 3px;
+  }
 
 .file_submit:hover{
   background-color: white;

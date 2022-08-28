@@ -5,13 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="../static/main.css">
-    <h1>deez nuts</h1>
+    <h1>Image Inspector</h1>
 </head>
 <body>
     <form class = "grid" action = "/result" method = post>
         <center>
             {% if url %}
-            <h3 style = "color: blue;">Url: {{url}}</h3>
+            <img src={{url}} alt={{url}}> 
+            {% endif %}
+
+            {% if tags %}
+            <h3>Recommended Tags:</h3>
+            <h3>{{tags}}</h3>
+            {% endif %}
+
+            {% if trend %}
+            <h3>Trends:</h3>
+            <h3>{{trend[0]}}</h3>
+            <h3>{{trend[1]}}</h3>
+            <h3>{{trend[2]}}</h3>
+            {% endif %}
+
+            {% if sentimentStr %}
+            <h3>Sentiment:</h3>
+            <h3>{{sentimentStr}}</h3>
+            {% endif %}
+
+            {% if broad %}
+            <h3>People also viewed:</h3>
+            <h3>{{broad}}</h3>
+            {% endif %}
+
+            {% if url_list %}
+            <h3>Similar images:</h3>
+            <img src={{url_list[0]}} alt={{url_list[0]}}> 
+            <img src={{url_list[1]}} alt={{url_list[1]}}> 
+            <img src={{url_list[2]}} alt={{url_list[2]}}> 
+            <img src={{url_list[3]}} alt={{url_list[3]}}> 
             {% endif %}
         </center>
         <label for = "Image">Enter image url: </label>
