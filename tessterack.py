@@ -21,21 +21,16 @@ for dir in dir_list:
     img = Image.open(path + "/" + dir)
     text = tess.image_to_string(img)
 
-    #print("--------------------------------------------\n" + dir + ":")
-
     res = re.findall(r'\w+', text.lower())
     words = " ".join(res)
-    #print(words)
-    #kws_list.append(words)
 
     r.extract_keywords_from_text(words)
     count = 0
     kws = []
     for rating, keywords in r.get_ranked_phrases_with_scores():
-        #print(keyword)
         keywords = keywords.split(" ")
         for keyword in keywords:
-            if keyword.isalpha():
+            if (keyword.isalpha() or (rating > 5 and keyword.isalpha())) and len(keyword) > 3:
                 kws.append(keyword)
                 count += 1
 
@@ -46,10 +41,9 @@ for dir in dir_list:
     if len(kws) != 0:
         topic_list.append(kws)
 
-    
-
 print(topic_list)
+
 from tren import *
 trends(topic_list)
 
-#trends([['joe mama']])
+#trends([['kid named finger']])
